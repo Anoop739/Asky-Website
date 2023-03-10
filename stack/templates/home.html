@@ -1,0 +1,105 @@
+{%extends 'base.html'%}
+{%block body%}
+{% comment %} qn section {% endcomment %}
+
+
+<div class="card text-white bg-primary mb-3" style="max-width: 100%;">
+
+    <div class="card-header">
+
+        {%if request.user.profile.profile_pic%}
+        <img src="{{request.user.profile.profile_pic.url}}" class=" rounded-circle" alt="..." height="80px">
+
+        {%endif%}
+        {{request.user}}
+
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Post new qstn</h5>
+      <p class="card-text">
+        <form action="" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <textarea name="description" id="" cols="30" class="form-control"></textarea>
+            <button type="submit">add</button>
+        </form>
+      </p>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} end qn section {% endcomment %}
+
+{% if request.user.profile%}
+      <a href="{%url 'profile-detail'%}">viewprofile</a>
+      <a href="{%url 'profile-edit' request.user.profile.id%}">updateprofile</a>
+    {%else%}
+      <a href="{%url 'profile-add'%}">addprofile</a>
+{%endif%}
+
+     {% comment %} qstn section starts  {% endcomment %}
+      
+<div class="container">
+    <div class="row">
+        <div class="col4"></div>
+        <div class="col4">
+            <form action="" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                {{form.as_p}}
+                <button type="submit">add</button>
+            </form>
+        </div>
+        <div class="col4"></div>
+
+    </div>
+</div>
+
+    {% comment %} qstn section starts   {% endcomment %}
+   
+   <!-- / qustn list scn start -->
+ {%for q in questions%}
+   <div>
+    {{q.description}}
+   {%if q.image%}
+     <img src="{{q.image.url}}" alt="">
+   {%endif%}
+   asked by {{q.user}} on {{q.created_date}}
+
+   </div>
+   <div>
+    <h3>add ur ans</h3>
+    <form action="{%url 'addanswer' q.id%}"method="post">
+        {%csrf_token%}
+        <input type="text" placeholder="enter ur ans" name="answer">
+        <button type="submit">add</button>
+    </form>
+   </div>
+    <!-- ans list -->
+    <h2><u>Answer</u></h2>
+    {%for ans in q.question_answers%}
+    <div>
+      
+
+        {{ans.answer}} posted by {{ans.user}} date{{ans.created_date}} <a href="{%url 'up_vote' ans.id%}">&#128077;&#127995;</a> {{ans.upvote_count}}
+    </div>
+    {%endfor%}
+    <!-- ans list end -->
+ {%endfor%}
+   <!-- qstn list scn end -->
+
+
+
+{%endblock%}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col4"></div>
+            <div class="col4">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                        {%if request.user.profile.profile_pic%}
+                        <img src="{{request.user.profile.profile_pic.url}}" class="image-fluid rounded-start" alt="...">
+
+                        {%endif%}
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title">{{request.user}}</h5>
+                          <p class="card-text">o {{request.user.profile.bio}}</p>
+                          <p class="card-text">o {{request.user.profile.email}}</p>
+                          <p class="card-text">o {{request.user.profile.first_name}}</p>
+
+
+                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+            </div>
+            <div class="col4"></div>
+        </div>
+    </div>
+</body>
+</html>
